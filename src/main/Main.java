@@ -17,7 +17,7 @@ public class Main {
 		customerList = new CustomerListImpl();
 		employeeList = new EmployeeListImpl();
 		insuranceProductList = new InsuranceProductListImpl();
-		contractList = new ContractListImpl();
+		contractList = new ContractListDBImpl();
 		loadData = new LoadData(customerList, employeeList);
 
 		loadData.loadCustomerData();
