@@ -28,7 +28,7 @@ import main.List.EventListImpl;
 	 * @return 심사 성공 여부 (true: 성공, false: 실패 - 해당 사건 ID가 없는 경우)
 	 */
 	public boolean evaluateCompensation(String eventID, boolean isReceipt) {
-		Event targetEvent = this.EventList.searchEvent("id", eventID).getFirst();
+		Event targetEvent = this.EventList.search("event_id", eventID).getFirst();
 		if (targetEvent == null)
 			return false;
 		Evaluation targetEvaluation = targetEvent.getEvaluation();
@@ -48,7 +48,7 @@ import main.List.EventListImpl;
 	 * @return 보상금 지급 성공시 true를, 보상금 ID가 유효하지 않거나 업데이트에 실패한 경우 false
 	 */
 	public boolean payCompensation(String compensationID, boolean isPaid) {
-		Compensation targetCompensation = this.EventList.searchCompensation("id", compensationID)
+		Compensation targetCompensation = this.EventList.search("compensation_id", compensationID)
 				.getFirst().getEvaluation().getCompensation();
 		if (targetCompensation == null) return false;
 		targetCompensation.receiptCompensation(isPaid);
@@ -57,25 +57,6 @@ import main.List.EventListImpl;
 		else
 			System.out.println("보상 지급이 거부되었습니다.");
 		return EventList.update(targetCompensation);
-	}
-
-	//임시, 더미데이터생성기
-	public void genrateDummy(int count) {
-
-		for (int i = 0; i < count; i++) {
-			String customerID = "CustomerN" + i;
-			String EventID = "EventN" + i;
-			String EvaluationID = "EvaluationN" + i;
-			String CompensationID = "CompensationN" + i;
-			Event e = new Event.Builder(EventID, customerID).build();
-			Evaluation ev = new Evaluation.Builder(EvaluationID, e.getEventID(), customerID).build();
-			Compensation c = new Compensation.Builder(CompensationID, ev.getEvaluationID(),
-					customerID).build();
-
-			ev.setCompensation(c);
-			e.setEvaluation(ev);
-			EventList.insert(e);
-		}
 	}
 
 	public EventList getEventList() {

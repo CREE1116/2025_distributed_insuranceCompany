@@ -19,7 +19,7 @@ public class ContractListDBImpl implements ContractList {
         PreparedStatement pstmt = conn.prepareStatement(sql)) { // contract_id가 DB 자동생성이 아니라면 RETURN_GENERATED_KEYS 필요 없음
 
       pstmt.setDate(1, new java.sql.Date(contract.getContractDate().getTime())); // java.util.Date -> java.sql.Date
-      pstmt.setString(2, contract.getCustomerID());
+      pstmt.setInt(2, contract.getCustomerID());
       pstmt.setDate(3, java.sql.Date.valueOf(contract.getExpirationDate())); // LocalDate -> java.sql.Date
       pstmt.setString(4, contract.getProductID());
       pstmt.setString(5, contract.getSalesID());
@@ -59,7 +59,7 @@ public class ContractListDBImpl implements ContractList {
 
 
   public List<Contract> findAll() {
-    String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contracts";
+    String sql = "SELECT * FROM contracts";
     List<Contract> contracts = new ArrayList<>();
     try (Connection conn = DBConnection.getConnection();
         Statement stmt = conn.createStatement();
@@ -80,7 +80,7 @@ public class ContractListDBImpl implements ContractList {
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setDate(1, new java.sql.Date(contract.getContractDate().getTime()));
-      pstmt.setString(2, contract.getCustomerID());
+      pstmt.setInt(2, contract.getCustomerID());
       pstmt.setDate(3, java.sql.Date.valueOf(contract.getExpirationDate()));
       pstmt.setString(4, contract.getProductID());
       pstmt.setString(5, contract.getSalesID());
@@ -131,7 +131,7 @@ public class ContractListDBImpl implements ContractList {
     return new Contract.Builder()
         .contractID(rs.getInt("contract_id"))
         .contractDate(new Date(rs.getDate("contract_date").getTime())) // java.sql.Date -> java.util.Date
-        .customerID(rs.getString("customer_id"))
+        .customerID(rs.getInt("customer_id"))
         .expirationDate(rs.getDate("expiration_date").toLocalDate()) // java.sql.Date -> LocalDate
         .productID(rs.getString("product_id"))
         .salesID(rs.getString("sales_id"))

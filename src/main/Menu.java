@@ -256,7 +256,7 @@ public class Menu {
 	}
 
 	private Contract searchContract() {
-		showContract();
+//		showContract();
 		int contractID = getInputInt("select contractID");
 		Contract selectedContract = contractList.search(contractID).get();
 		return selectedContract;
@@ -535,7 +535,7 @@ public class Menu {
 
 		// 보상 지급 대기중인 보상 조회 로직, 라인넘버 통해서 선택함,
 		System.out.println("===CompensationList===");
-		ArrayList<Event> events = eventList.searchCompensation("state", "Awaiting"); // 일반 보상 지급이 아직 되지 않은 경우만 골라오긴 하는데,
+		List<Event> events = eventList.search("state_of_compensation", "Awaiting"); // 일반 보상 지급이 아직 되지 않은 경우만 골라오긴 하는데,
 																						// 보상 지급 결정이 내려졌는지가 반영이 되야할것같음..
 																						// DB 마렵네
 		if (events.size() <= 0) {
@@ -632,7 +632,7 @@ public class Menu {
 
 	private Event eventDetailVeiw(EventList eventList) {
 		System.out.println("===EventList===");
-		ArrayList<Event> events = eventList.searchEvaluation("state", "Awaiting"); // 심사 대기중 리스트 가져옴
+		List<Event> events = eventList.search("state_of_evaluation", "Awaiting"); // 심사 대기중 리스트 가져옴
 		if (events.size() <= 0) {
 			System.out.println("보상 지급 대기중인 항목이 없습니다");
 			return null;
@@ -679,7 +679,7 @@ public class Menu {
 				System.out.println("심사가 거절되었습니다");
 				return;
 			case UserSelection.Cancel:
-				System.out.println("계약 심사가 취소되었습니다.");
+				System.out.println("보상 심사가 취소되었습니다.");
 				return;
 		}
 	}

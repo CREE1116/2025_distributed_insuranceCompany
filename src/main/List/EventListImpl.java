@@ -1,6 +1,7 @@
 
 package main.List;
 import java.util.ArrayList;
+import java.util.List;
 import main.Data.Compensation;
 import main.Data.Evaluation;
 import main.Data.Event;
@@ -47,7 +48,7 @@ public class EventListImpl implements EventList {
 
 //Search
 	@Override
-	public ArrayList<Event> searchEvent(String key, String value) {
+	public List<Event> search(String key, String value) {
 		ArrayList<Event> result = new ArrayList<>();
 		for(Event event : this.Events){
 			switch (key.toLowerCase()){
@@ -71,7 +72,6 @@ public class EventListImpl implements EventList {
 		return result;
 	}
 
-	@Override
 	public ArrayList<Event> searchEvaluation(String key, String value) {
 		ArrayList<Event> result = new ArrayList<>();
 		for(Event event : this.Events){
@@ -98,7 +98,7 @@ public class EventListImpl implements EventList {
 		return result;
 	}
 
-	@Override
+
 	public ArrayList<Event> searchCompensation(String key, String value) {
 		ArrayList<Event> result = new ArrayList<>();
 		for(Event event : this.Events){

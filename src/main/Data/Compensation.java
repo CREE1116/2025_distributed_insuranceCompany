@@ -11,10 +11,10 @@ public class Compensation {
 
 
 	// Example Fields
-	private final String compensationID;
-	private final String evaluationID; // Link to an Evaluation
-	private final String customerID;   // Link to a Customer
-	private ProcessState resultOfPaid;
+	private final int compensationID;
+	private final int evaluationID; // Link to an Evaluation
+	private final int customerID;   // Link to a Customer
+	private ProcessState processOfCompensation;
 	private int amountOfPaid;
 	// Builder Pattern
 
@@ -23,40 +23,40 @@ public class Compensation {
 		this.evaluationID = builder.evaluationID;
 		this.customerID = builder.customerID;
 		this.amountOfPaid = builder.claimsPaid;
-		this.resultOfPaid = ProcessState.Awaiting;
+		this.processOfCompensation = ProcessState.Awaiting;
 	}
 
 	// Getters
-	public String getCompensationID() {
+	public int getCompensationID() {
 		return compensationID;
 	}
 
-	public String getEvaluationID() {
+	public int getEvaluationID() {
 		return evaluationID;
 	}
 
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
 
 	public ProcessState getState() {
-		return resultOfPaid;
+		return processOfCompensation;
 	}
 
 	public int getAmountOfPaid() {
 		return amountOfPaid;
 	}
-	public ProcessState getResultOfPaid(){
-		return resultOfPaid;
+	public ProcessState getProcessOfCompensation(){
+		return processOfCompensation;
 	}
 
 	// setter?
 	public void receiptCompensation(boolean isReceipt){
 		if(isReceipt) {
-			this.resultOfPaid = ProcessState.Completed;
+			this.processOfCompensation = ProcessState.Completed;
 		}
 		else {
-			this.resultOfPaid = ProcessState.Rejected;
+			this.processOfCompensation = ProcessState.Rejected;
 		}
 	}
 
@@ -65,14 +65,14 @@ public class Compensation {
   }
 
 	public static class Builder {
-		private final String evaluationID;
-		private final String customerID;
-		private final String compensationID;
+		private final int evaluationID;
+		private final int customerID;
+		private final int compensationID;
 		private ProcessState paidState;
 		private int claimsPaid;
 
 
-		public Builder(String compensationID,String evaluationID, String customerID) {
+		public Builder(int compensationID, int evaluationID, int customerID) {
 			this.evaluationID = evaluationID;
 			this.customerID = customerID;
 			this.compensationID = compensationID;
@@ -104,7 +104,7 @@ public class Compensation {
 				"compensationID='" + compensationID + '\'' +
 				", evaluationID='" + evaluationID + '\'' +
 				", customerID='" + customerID + '\'' +
-				", paidState=" + resultOfPaid +
+				", paidState=" + processOfCompensation +
 				", claimsPaid=" + amountOfPaid +
 				'}';
 	}
@@ -114,8 +114,8 @@ public class Compensation {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Compensation that = (Compensation) o;
-		return amountOfPaid == that.amountOfPaid && Objects.equals(compensationID, that.compensationID) && Objects.equals(evaluationID, that.evaluationID) && Objects.equals(customerID, that.customerID) && resultOfPaid
-				== that.resultOfPaid;
+		return amountOfPaid == that.amountOfPaid && Objects.equals(compensationID, that.compensationID) && Objects.equals(evaluationID, that.evaluationID) && Objects.equals(customerID, that.customerID) && processOfCompensation
+				== that.processOfCompensation;
 	}
 
 }

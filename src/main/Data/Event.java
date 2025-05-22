@@ -11,11 +11,11 @@ import java.util.Objects;
 public class Event {
 
 	private int claimValue;
-	public String customerID;
+	public int customerID;
 	private String documents;
 	private Date eventDate;
 	private String eventDescription;
-	public String eventID;
+	public int eventID;
 	private String eventLocation;
 	private Date receiptDate;
 	private Evaluation evaluation;
@@ -29,14 +29,14 @@ public class Event {
 		this.eventID = builder.customerID;
 		this.eventLocation = builder.eventLocation;
 		this.receiptDate = builder.receiptDate;
-		this.evaluation = builder.m_Evaluation;
+		this.evaluation = builder.evaluation;
 	}
 
 	public int getClaimValue() {
 		return claimValue;
 	}
 
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
 
@@ -52,7 +52,7 @@ public class Event {
 		return eventDescription;
 	}
 
-	public String getEventID() {
+	public int getEventID() {
 		return eventID;
 	}
 
@@ -77,17 +77,17 @@ public class Event {
 
 
 	public static class Builder {
-		private final String customerID;
-		private final String eventID;
+		private final int customerID;
+		private final int eventID;
 		private int claimValue;
 		private String documents;
 		private Date eventDate;
 		private String eventDescription;
 		private String eventLocation;
 		private Date receiptDate;
-		private Evaluation m_Evaluation;
+		private Evaluation evaluation;
 
-		public Builder(String eventID,String customerID){
+		public Builder(int eventID,int customerID){
 			this.eventID = eventID;
 			this.customerID = customerID;
 		}
@@ -120,8 +120,8 @@ public class Event {
 			this.receiptDate = receiptDate;
 			return this;
 		}
-		public Builder m_Evaluation(Evaluation m_Evaluation) {
-			this.m_Evaluation = m_Evaluation;
+		public Builder evaluation(Evaluation evaluation) {
+			this.evaluation = evaluation;
 			return this;
 		}
 

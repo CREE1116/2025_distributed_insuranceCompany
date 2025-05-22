@@ -5,9 +5,9 @@ import main.Enum.ProcessState;
 public class Evaluation {
 
 
-	private final String evaluationID;
-	private final String eventID;
-	private final String customerID;
+	private final int evaluationID;
+	private final int eventID;
+	private final int customerID;
 	private ProcessState resultOfEvaluation;
 	private Compensation compensation;
 
@@ -16,20 +16,20 @@ public class Evaluation {
 		this.evaluationID = builder.evaluationID;
 		this.eventID = builder.eventID;
 		this.customerID = builder.customerID;
-		this.compensation = builder.m_Compensation;
-		this.resultOfEvaluation = ProcessState.Awaiting;
+		this.compensation = builder.compensation;
+		this.resultOfEvaluation = (builder.resultOfEvaluation != null) ? builder.resultOfEvaluation : ProcessState.Awaiting;
 	}
 
 	// Getters
-	public String getEvaluationID() {
+	public int getEvaluationID() {
 		return evaluationID;
 	}
 
-	public String getEventID() {
+	public int getEventID() {
 		return eventID;
 	}
 
-	public String getCustomerID() {return customerID;}
+	public int getCustomerID() {return customerID;}
 
 	public Compensation getCompensation() {return compensation;}
 
@@ -69,21 +69,26 @@ public class Evaluation {
 	// Builder class
 	public static class Builder {
 		// Required fields
-		private final String eventID;
-		private final String customerID;
-		private final String evaluationID;
+		private final int eventID;
+		private final int customerID;
+		private final int evaluationID;
 		// Optional fields
-		private Compensation m_Compensation;
+		private Compensation compensation;
+		private ProcessState resultOfEvaluation;
 
 
-		public Builder(String evaluationID,String eventID, String customerID) {
+		public Builder(int evaluationID, int eventID, int customerID) {
 			this.eventID = eventID;
 			this.customerID = customerID;
 			this.evaluationID = evaluationID;
 		}
 
 		public Builder compensation(Compensation compensation) {
-			this.m_Compensation = compensation;
+			this.compensation = compensation;
+			return this;
+		}
+		public Builder resultOfEvaluation(ProcessState state){
+			this.resultOfEvaluation = state;
 			return this;
 		}
 

@@ -11,7 +11,7 @@ public class Contract {
 
 	private Date contractDate;
 	private int contractID;
-	private String customerID;
+	private int customerID;
 	private LocalDate expirationDate; // LocalDate를 사용하는 것으로 가정합니다.
 	private String productID;
 	private String salesID;
@@ -39,7 +39,7 @@ public class Contract {
 		return contractID;
 	}
 
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
 
@@ -93,7 +93,7 @@ public class Contract {
 	public static class Builder {
 		private Date contractDate;
 		private int contractID; // Builder에서 초기 설정 가능 (예: DB에서 자동 생성되지 않는 경우)
-		private String customerID;
+		private int customerID;
 		private LocalDate expirationDate;
 		private String productID;
 		private String salesID;
@@ -110,7 +110,7 @@ public class Contract {
 			return this;
 		}
 
-		public Builder customerID(String customerID) {
+		public Builder customerID(int customerID) {
 			this.customerID = customerID;
 			return this;
 		}
