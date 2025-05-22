@@ -28,8 +28,8 @@ import main.List.EventListImpl;
 	 * @param isReceipt 심사 결과 (true: 승인, false: 거절)
 	 * @return 심사 성공 여부 (true: 성공, false: 실패 - 해당 사건 ID가 없는 경우)
 	 */
-	public boolean evaluateCompensation(String eventID, boolean isReceipt) {
-		Event targetEvent = this.EventList.search("event_id", eventID).getFirst();
+	public boolean evaluateCompensation(int eventID, boolean isReceipt) {
+		Event targetEvent = this.EventList.search("event_id", Integer.toString(eventID)).getFirst();
 		if (targetEvent == null)
 			return false;
 		Evaluation targetEvaluation = targetEvent.getEvaluation();
@@ -48,8 +48,8 @@ import main.List.EventListImpl;
 	 * @param isPaid         true면지급, false면 거부
 	 * @return 보상금 지급 성공시 true를, 보상금 ID가 유효하지 않거나 업데이트에 실패한 경우 false
 	 */
-	public boolean payCompensation(String compensationID, boolean isPaid) {
-		Compensation targetCompensation = this.EventList.search("compensation_id", compensationID)
+	public boolean payCompensation(int compensationID, boolean isPaid) {
+		Compensation targetCompensation = this.EventList.search("compensation_id", Integer.toString(compensationID))
 				.getFirst().getEvaluation().getCompensation();
 		if (targetCompensation == null) return false;
 		targetCompensation.receiptCompensation(isPaid);

@@ -40,6 +40,11 @@ public class EventListImpl implements EventList {
 	}
 
 	@Override
+	public boolean delete(int eventID) {
+		return false;
+	}
+
+	@Override
 	public boolean insert(Event event) {
 		if(event==null)return false;
 		return Events.add(event);
@@ -59,7 +64,7 @@ public class EventListImpl implements EventList {
 					if(event.getEvaluation().getResultOfEvaluation() == ProcessState.fromString(value)) result.add(event);
 					break;
 				case "id":
-					if(event.getEventID().equals(value)) result.add(event);
+					if(Integer.toString(event.getEventID()).equals(value)) result.add(event);
 					break;
 				case "all":
 					result.add(event);
@@ -85,7 +90,7 @@ public class EventListImpl implements EventList {
 					if(evaluation.getResultOfEvaluation() == ProcessState.fromString(value)) result.add(event);
 					break;
 				case "id":
-					if(evaluation.getEvaluationID().equals(value)) result.add(event);
+					if(Integer.toString(evaluation.getEvaluationID()).equals(value)) result.add(event);
 					break;
 				case "all":
 					result.add(event);
@@ -112,7 +117,7 @@ public class EventListImpl implements EventList {
 					if(compensation.getState() == ProcessState.fromString(value)) result.add(event);
 					break;
 				case "id":
-					if(compensation.getCompensationID().equals(value)) result.add(event);
+					if(Integer.toString(compensation.getCompensationID()).equals(value)) result.add(event);
 					break;
 				case "all":
 					result.add(event);
@@ -131,7 +136,7 @@ public class EventListImpl implements EventList {
 	public boolean update(Event updatedEvent) {
 		for (int i = 0; i < Events.size(); i++) {
 			Event existingEvents = Events.get(i);
-			if (existingEvents.getEventID().equals(updatedEvent.getEventID())) {
+			if (Integer.toString(existingEvents.getEventID()).equals(updatedEvent.getEventID())) {
 				this.Events.set(i, updatedEvent);
 				return true;
 			}
@@ -145,7 +150,7 @@ public class EventListImpl implements EventList {
     // 리스트에서 Event 객체를 가져옵니다.
     for (Event eventInList : Events) {
       Evaluation existingEvaluation = eventInList.getEvaluation();
-      if (existingEvaluation.getEvaluationID().equals(updatedEvaluation.getEvaluationID())) {
+      if (Integer.toString(existingEvaluation.getEvaluationID()).equals(updatedEvaluation.getEvaluationID())) {
         eventInList.setEvaluation(updatedEvaluation);
         return true;
       }
@@ -157,12 +162,17 @@ public class EventListImpl implements EventList {
 	public boolean update(Compensation compensation) {
     for (Event event : Events) {
       Compensation existingCompensation = event.getEvaluation().getCompensation();
-      if (existingCompensation.getCompensationID().equals(compensation.getCompensationID())) {
+      if (Integer.toString(existingCompensation.getCompensationID()).equals(compensation.getCompensationID())) {
         event.getEvaluation().setCompensation(compensation);
         return true;
       }
     }
 		return false;
 //update compensation
+	}
+
+	@Override
+	public List<Event> findAll() {
+		return List.of();
 	}
 }//end EventListImpl

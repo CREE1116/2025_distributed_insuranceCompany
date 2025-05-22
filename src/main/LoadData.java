@@ -5,7 +5,9 @@ import main.Employee.Employee.EmployeeType;
 import main.Employee.LossAdjuster;
 import main.Employee.ProductManagement;
 import main.Employee.Sales;
+import main.Employee.UnderWriter;
 import main.Enum.Sex;
+import main.List.ContractList;
 import main.List.CustomerListImpl;
 import main.List.EmployeeListImpl;
 import main.List.InsuranceProductList;
@@ -13,11 +15,13 @@ import main.List.InsuranceProductList;
 public class LoadData {
 	private CustomerListImpl customerList;
 	private EmployeeListImpl employeeList;
+	private ContractList contractList;
 	private InsuranceProductList insuranceProductList;
 	
-	public LoadData(CustomerListImpl customerList,EmployeeListImpl employeeList) {
+	public LoadData(CustomerListImpl customerList,EmployeeListImpl employeeList, ContractList contractList) {
 		this.customerList = customerList;
 		this.employeeList = employeeList;
+		this.contractList = contractList;
 	}
 	public void loadCustomerData() {
 		Customer customer1 = new Customer.Builder().accountNumber("333377645328").address("서울특별시 서대문구 북가좌동").age(23)
@@ -49,8 +53,12 @@ public class LoadData {
 		for (int i = 0; i < 3; i++) { // add temp three lossAdjuster
 			int numOfEmployees = employeeList.employees.size();
 			LossAdjuster lossAdjuster = new LossAdjuster(numOfEmployees, EmployeeType.LossAdjuster);
-			lossAdjuster.genrateDummy(10);
 			employeeList.insert(lossAdjuster);
+		}
+		for (int i = 0; i < 3; i++) { // add temp three lossAdjuster
+			int numOfEmployees = employeeList.employees.size();
+			UnderWriter uw = new UnderWriter(numOfEmployees, EmployeeType.UnderWriter, customerList,contractList);
+			employeeList.insert(uw);
 		}
 
 	}

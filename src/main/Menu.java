@@ -113,10 +113,10 @@ public class Menu {
 				System.out.println("Good Bye...");
 				System.exit(0);
 			case 1:
-				payCompensation();
+//				payCompensation();
 				break;
 			case 2:
-				evaluateCompensation();
+//				evaluateCompensation();
 				break;
 			default:
 				System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
@@ -256,7 +256,7 @@ public class Menu {
 	}
 
 	private Contract searchContract() {
-//		showContract();
+		showContract();
 		int contractID = getInputInt("select contractID");
 		Contract selectedContract = contractList.search(contractID).get();
 		return selectedContract;
@@ -478,8 +478,7 @@ public class Menu {
 
 	/**
 	 * string입력 값을 HashMap<String,String>으로 변환
-	 * 
-	 * @param scanner
+	 *
 	 * @return coverageByAge값을 HashMap<String,String>으로 반환
 	 */
 	public HashMap<String, String> checkHashMap() {
@@ -501,8 +500,7 @@ public class Menu {
 
 	/**
 	 * 입력값에 따라 Sex 결정
-	 * 
-	 * @param scanner
+	 *
 	 * @return 입력값에 따른 Sex 반환
 	 */
 	public Sex checkSexInput() {
@@ -609,26 +607,26 @@ public class Menu {
 
 	}
 
-	private Customer CustomerDetailView(Event selectedEvent) {
-		Customer selectedCustomer = customerList.search(selectedEvent.getCustomerID());
-		if (selectedCustomer == null) {
-			System.out.println("해당하는 고객이 없습니다.");
-			return null;
-		}
-		System.out.println("===CustomerDetail===\n" + selectedCustomer);
-		System.out.println("고객정보 확인이 끝나셨다면 Yes를 눌러주세요");
-		switch (getUserSelectYorN()) {
-		case UserSelection.Yes:
-			return selectedCustomer;
-		case UserSelection.No:
-			System.out.println("고객 상세 정보 조회로 돌아갑니다.");
-			return CustomerDetailView(selectedEvent);
-		case UserSelection.Cancel:
-			System.out.println("보상 심사가 취소되었습니다.");
-			return null;
-		}
-		return null;
-	}
+//	private Customer CustomerDetailView(Event selectedEvent) {
+//		Customer selectedCustomer = customerList.search(selectedEvent.getCustomerID());
+//		if (selectedCustomer == null) {
+//			System.out.println("해당하는 고객이 없습니다.");
+//			return null;
+//		}
+//		System.out.println("===CustomerDetail===\n" + selectedCustomer);
+//		System.out.println("고객정보 확인이 끝나셨다면 Yes를 눌러주세요");
+//		switch (getUserSelectYorN()) {
+//		case UserSelection.Yes:
+//			return selectedCustomer;
+//		case UserSelection.No:
+//			System.out.println("고객 상세 정보 조회로 돌아갑니다.");
+//			return CustomerDetailView(selectedEvent);
+//		case UserSelection.Cancel:
+//			System.out.println("보상 심사가 취소되었습니다.");
+//			return null;
+//		}
+//		return null;
+//	}
 
 	private Event eventDetailVeiw(EventList eventList) {
 		System.out.println("===EventList===");
@@ -664,9 +662,9 @@ public class Menu {
 	//------- UW
 	private void underwrite() {
 		Contract selectedContract = searchContract();
-		System.out.println("==고객정보==\n"+customerList.search(selectedContract.getCustomerID()));
-		System.out.println("\n==상품정보\n"+insuranceProductList.getProduct(selectedContract.getProductID()));
+		System.out.println("==고객정보==\n"+customerList.search("1"));
 		System.out.println("\n==계약정보==\n"+selectedContract);
+//		System.out.println("\n==상품정보\n"+insuranceProductList.getProduct(1));
 		System.out.println("계약을 심사하시겠습니까?");
 		UnderWriter uw = (UnderWriter)loginedEmployee;
 		switch (getUserSelectYorN()) {
