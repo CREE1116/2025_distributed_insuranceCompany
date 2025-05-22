@@ -33,14 +33,16 @@ public class Menu {
 
 		String[] menuList = {};
 		if (loginedEmployeeType == EmployeeType.Sales) {
-			String[] salesMenuList = { "add customer", "delete customer", "modify customer", "search customer",
-					"add contract", "delete contract", "modify contract", "search contract" };
+			String[] salesMenuList = { "고객 추가", "고객 삭제", "고객 수정", "고객 검색",
+					"계약 추가", "계약 삭제", "계약 수정", "계약 검색" };
 			menuList = salesMenuList;
 		} else if (loginedEmployeeType == EmployeeType.ProductManagement) {
 			String[] productManagementMenuList = { "상품 등록", "상품 수정", "상품 조회", "상품 삭제" };
 			menuList = productManagementMenuList;
 		} else if (loginedEmployeeType == EmployeeType.LossAdjuster) {
 			menuList = new String[] { "보상 지급", "보상 심사" };
+		} else if (loginedEmployeeType == EmployeeType.UnderWriter) {
+			menuList = new String[] { "계약 심사"};
 		}
 
 		System.out.println("\nSelect Menu===");
@@ -120,9 +122,22 @@ public class Menu {
 				System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
 				break;
 			}
+		}else if (loginedEmployeeType == EmployeeType.UnderWriter) {
+			switch (selectedMenu) {
+				case 0:
+					System.out.println("Good Bye...");
+					System.exit(0);
+				case 1:
+					underwrite();
+					break;
+				default:
+					System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+					break;
+			}
 		}
 
 	}
+
 
 	private void createCustomer() {
 		System.out.println("Enter customer details:");
@@ -172,6 +187,7 @@ public class Menu {
 		System.out.println("고객ID\t" + customer.getCustomerID());
 		return customer;
 	}
+
 
 	private void updateCustomer() {
 		Sales sales = (Sales) loginedEmployee;
@@ -239,8 +255,11 @@ public class Menu {
 
 	}
 
-	private void searchContract() {
-
+	private Contract searchContract() {
+		showContract();
+		int contractID = getInputInt("select contractID");
+		Contract selectedContract = contractList.search(contractID).get();
+		return selectedContract;
 	}
 
 	private void updateContract() {
@@ -641,6 +660,34 @@ public class Menu {
 			return null;
 		}
 		return null;
+	}
+	//------- UW
+	private void underwrite() {
+		Contract selectedContract = searchContract();
+		System.out.println("==고객정보==\n"+customerList.search(selectedContract.getCustomerID()));
+		System.out.println("\n==상품정보\n"+insuranceProductList.getProduct(selectedContract.getProductID()));
+		System.out.println("\n==계약정보==\n"+selectedContract);
+		System.out.println("계약을 심사하시겠습니까?");
+		UnderWriter uw = (UnderWriter)loginedEmployee;
+		switch (getUserSelectYorN()) {
+			case UserSelection.Yes:
+				uw.underwrite(selectedContract.getContractID(),true);
+				System.out.println("심사가 완료되었습니다");
+				return;
+			case UserSelection.No:
+				uw.underwrite(selectedContract.getContractID(),false);
+				System.out.println("심사가 거절되었습니다");
+				return;
+			case UserSelection.Cancel:
+				System.out.println("계약 심사가 취소되었습니다.");
+				return;
+		}
+	}
+	private void showContract() {
+		System.out.println("Contract List===");
+		for (Contract c : contractList.findAll()) {
+			System.out.println(c);
+		}
 	}
 
 }

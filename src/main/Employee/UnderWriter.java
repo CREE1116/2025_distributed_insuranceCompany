@@ -25,8 +25,7 @@ public class UnderWriter extends Employee {
 	 * @param approve
 	 * @param ContractID
 	 */
-	public boolean underwrite(String ContractID , boolean approve){
-
-		return false;
+	public void underwrite(int ContractID , boolean approve){
+		contractList.update(contractList.search(ContractID).get().receiptEvaluation(approve));
 	}
 }//end UnderWriter
