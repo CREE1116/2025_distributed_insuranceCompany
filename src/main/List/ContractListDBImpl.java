@@ -14,7 +14,7 @@ public class ContractListDBImpl implements ContractList {
 
   @Override
   public int insert(Contract contract) {
-    String sql = "INSERT INTO contracts (contract_date, customer_id, expiration_date, product_id, sales_id, state) VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO contract (contract_date, customer_id, expiration_date, product_id, sales_id, state) VALUES (?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) { // contract_id가 DB 자동생성이 아니라면 RETURN_GENERATED_KEYS 필요 없음
 
@@ -40,7 +40,7 @@ public class ContractListDBImpl implements ContractList {
 
   @Override
   public Optional<Contract> search(int contractID) {
-    String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contracts WHERE contract_id = ?";
+    String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contract WHERE contract_id = ?";
     Contract contract = null;
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -59,7 +59,7 @@ public class ContractListDBImpl implements ContractList {
 
 
   public List<Contract> findAll() {
-    String sql = "SELECT * FROM contracts";
+    String sql = "SELECT * FROM contract";
     List<Contract> contracts = new ArrayList<>();
     try (Connection conn = DBConnection.getConnection();
         Statement stmt = conn.createStatement();
@@ -76,7 +76,7 @@ public class ContractListDBImpl implements ContractList {
 
   @Override
   public int update(Contract contract) {
-    String sql = "UPDATE contracts SET contract_date = ?, customer_id = ?, expiration_date = ?, product_id = ?, sales_id = ?, state = ? WHERE contract_id = ?";
+    String sql = "UPDATE contract SET contract_date = ?, customer_id = ?, expiration_date = ?, product_id = ?, sales_id = ?, state = ? WHERE contract_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setDate(1, new java.sql.Date(contract.getContractDate().getTime()));
@@ -96,7 +96,7 @@ public class ContractListDBImpl implements ContractList {
 
   @Override
   public int delete(int contractID) {
-    String sql = "DELETE FROM contracts WHERE contract_id = ?";
+    String sql = "DELETE FROM contract WHERE contract_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, contractID);
@@ -109,7 +109,7 @@ public class ContractListDBImpl implements ContractList {
   }
 
   public List<Contract> searchByCustomerID(String customerID) {
-    String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contracts WHERE customer_id = ?";
+    String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contract WHERE customer_id = ?";
     List<Contract> contracts = new ArrayList<>();
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {

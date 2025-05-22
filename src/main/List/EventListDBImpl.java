@@ -48,7 +48,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public boolean delete(int eventID) {
-    String sql = "DELETE FROM events WHERE event_id = ?";
+    String sql = "DELETE FROM event WHERE event_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, eventID);
@@ -62,7 +62,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public boolean insert(Event event) {
-    String sql = "INSERT INTO events (event_id, customer_id, claim_value, documents, event_date, event_description, event_location, event_receipt_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO event (event_id, customer_id, claim_value, documents, event_date, event_description, event_location, event_receipt_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, event.getEventID());
@@ -88,7 +88,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public List<Event> search(String key, String value) {
-    String sql = "SELECT * FROM events WHERE " + key + " LIKE ?";
+    String sql = "SELECT * FROM event WHERE " + key + " LIKE ?";
     List<Event> events = new ArrayList<>();
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -107,7 +107,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public boolean update(Event event) {
-    String sql = "UPDATE events SET customer_id = ?, claim_value = ?, documents = ?, event_date = ?, event_description = ?, event_location = ?, event_receipt_date = ? WHERE event_id = ?";
+    String sql = "UPDATE event SET customer_id = ?, claim_value = ?, documents = ?, event_date = ?, event_description = ?, event_location = ?, event_receipt_date = ? WHERE event_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, event.getCustomerID());
@@ -128,11 +128,11 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public boolean update(Evaluation evaluation) {
-    String sql = "UPDATE events SET result_of_evaluation = ? WHERE evaluation_id = ?"; // 'evaluation_id'가 필요합니다.
+    String sql = "UPDATE event SET event.state_of_evaluation = ? WHERE event_id = ?"; // 'evaluation_id'가 필요합니다.
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, evaluation.getResultOfEvaluation().toString());
-      pstmt.setInt(2, evaluation.getEvaluationID()); // Evaluation 객체에 evaluationId가 있다고 가정합니다.
+      pstmt.setInt(2, evaluation.getEventID()); // Evaluation 객체에 evaluationId가 있다고 가정합니다.
       int affectedRows = pstmt.executeUpdate();
       return affectedRows > 0;
     } catch (SQLException e) {
@@ -143,7 +143,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public boolean update(Compensation compensation) {
-    String sql = "UPDATE events SET amount_of_paid = ?, state_of_compensation = ? WHERE compensation_id = ?"; // 'compensation_id'가 필요합니다.
+    String sql = "UPDATE event SET amount_of_paid = ?, state_of_compensation = ? WHERE event_id = ?"; // 'compensation_id'가 필요합니다.
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, compensation.getAmountOfPaid());
@@ -159,7 +159,7 @@ public class EventListDBImpl implements EventList{
 
   @Override
   public List<Event> findAll() {
-    String sql = "SELECT * FROM events";
+    String sql = "SELECT * FROM event";
     List<Event> events = new ArrayList<>();
     try (Connection conn = DBConnection.getConnection();
         Statement stmt = conn.createStatement();

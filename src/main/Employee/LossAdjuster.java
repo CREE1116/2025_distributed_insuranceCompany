@@ -4,6 +4,7 @@ import main.Data.Compensation;
 import main.Data.Evaluation;
 import main.Data.Event;
 import main.List.EventList;
+import main.List.EventListDBImpl;
 import main.List.EventListImpl;
 
 /**
@@ -17,7 +18,7 @@ import main.List.EventListImpl;
 
 	public LossAdjuster(int numOfEmployees, EmployeeType employeeType) {
 		super(numOfEmployees, employeeType);
-		this.EventList = new EventListImpl();
+		this.EventList = new EventListDBImpl();
 	}
 
 	/**
