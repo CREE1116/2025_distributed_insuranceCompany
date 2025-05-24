@@ -9,25 +9,25 @@ public interface ContractList {
 	 * 
 	 * @param contractID
 	 */
-	public int delete(int contractID);
+	public String delete(String contractID);
 
 	/**
 	 * 
 	 * @param contract
 	 */
-	public int insert(Contract contract);
+	public String insert(Contract contract);
 
 	/**
 	 * 
 	 * @param contractID
 	 */
-	public Optional<Contract> search(int contractID);
+	public Optional<Contract> search(String contractID);
 
 	/**
 	 * 
 	 * @param contract
 	 */
-	public int update(Contract contract);
+	public String update(Contract contract);
 
 	public List<Contract> findAll();
 }

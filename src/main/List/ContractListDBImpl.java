@@ -13,13 +13,13 @@ public class ContractListDBImpl implements ContractList {
 
 
   @Override
-  public int insert(Contract contract) {
+  public String insert(Contract contract) {
     String sql = "INSERT INTO contract (contract_date, customer_id, expiration_date, product_id, sales_id, state) VALUES (?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) { // contract_id가 DB 자동생성이 아니라면 RETURN_GENERATED_KEYS 필요 없음
 
       pstmt.setDate(1, new java.sql.Date(contract.getContractDate().getTime())); // java.util.Date -> java.sql.Date
-      pstmt.setInt(2, contract.getCustomerID());
+      pstmt.setString(2, contract.getCustomerID());
       pstmt.setDate(3, java.sql.Date.valueOf(contract.getExpirationDate())); // LocalDate -> java.sql.Date
       pstmt.setString(4, contract.getProductID());
       pstmt.setString(5, contract.getSalesID());
@@ -39,12 +39,12 @@ public class ContractListDBImpl implements ContractList {
 
 
   @Override
-  public Optional<Contract> search(int contractID) {
+  public Optional<Contract> search(String contractID) {
     String sql = "SELECT contract_id, contract_date, customer_id, expiration_date, product_id, sales_id, state FROM contract WHERE contract_id = ?";
     Contract contract = null;
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, contractID);
+      pstmt.setString(1, contractID);
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
@@ -75,17 +75,17 @@ public class ContractListDBImpl implements ContractList {
   }
 
   @Override
-  public int update(Contract contract) {
+  public String update(Contract contract) {
     String sql = "UPDATE contract SET contract_date = ?, customer_id = ?, expiration_date = ?, product_id = ?, sales_id = ?, state = ? WHERE contract_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setDate(1, new java.sql.Date(contract.getContractDate().getTime()));
-      pstmt.setInt(2, contract.getCustomerID());
+      pstmt.setString(2, contract.getCustomerID());
       pstmt.setDate(3, java.sql.Date.valueOf(contract.getExpirationDate()));
       pstmt.setString(4, contract.getProductID());
       pstmt.setString(5, contract.getSalesID());
       pstmt.setString(6, contract.getState().name());
-      pstmt.setInt(7, contract.getContractID());
+      pstmt.setString(7, contract.getContractID());
       pstmt.executeUpdate();
       return contract.getContractID();
     } catch (SQLException e) {
@@ -95,11 +95,11 @@ public class ContractListDBImpl implements ContractList {
   }
 
   @Override
-  public int delete(int contractID) {
+  public String delete(String contractID) {
     String sql = "DELETE FROM contract WHERE contract_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, contractID);
+      pstmt.setString(1, contractID);
       pstmt.executeUpdate();
       return contractID;
     } catch (SQLException e) {
@@ -129,9 +129,9 @@ public class ContractListDBImpl implements ContractList {
   // ResultSet의 현재 행을 Contract 객체로 매핑하는 헬퍼 메서드
   private Contract mapRowToContract(ResultSet rs) throws SQLException {
     return new Contract.Builder()
-        .contractID(rs.getInt("contract_id"))
+        .contractID(rs.getString("contract_id"))
         .contractDate(new Date(rs.getDate("contract_date").getTime())) // java.sql.Date -> java.util.Date
-        .customerID(rs.getInt("customer_id"))
+        .customerID(rs.getString("customer_id"))
         .expirationDate(rs.getDate("expiration_date").toLocalDate()) // java.sql.Date -> LocalDate
         .productID(rs.getString("product_id"))
         .salesID(rs.getString("sales_id"))

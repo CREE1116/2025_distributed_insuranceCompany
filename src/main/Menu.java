@@ -257,7 +257,7 @@ public class Menu {
 
 	private Contract searchContract() {
 		showContract();
-		int contractID = getInputInt("select contractID");
+		String contractID = getInputStr("select contractID");
 		Contract selectedContract = contractList.search(contractID).get();
 		return selectedContract;
 	}
@@ -574,38 +574,38 @@ public class Menu {
 		}
 	}
 
-	private void evaluateCompensation() {
-		LossAdjuster lossAdjuster = (LossAdjuster) loginedEmployee; // 관리자 로딩
-
-		EventList eventList = lossAdjuster.getEventList(); // 컴포지션... 관리자가 리스트를 들고 있음, 가져와야함
-
-		Event selectedEvent = eventDetailVeiw(eventList);
-		if (selectedEvent == null) {
-			System.out.println("메뉴로 돌아갑니다.");
-			return;
-		}
-		Customer selectedCustomer = CustomerDetailView(selectedEvent);
-		if (selectedCustomer == null) {
-			System.out.println("메뉴로 돌아갑니다.");
-			return;
-		}
-		// 계약이 아직 구현되지 않아, 계약 조회는 이후 구현
-		System.out.println("심사 결과를 선택해주세요 pass = Yes, nonpass = No, cancel = Cancel");
-		switch (getUserSelectYorN()) {
-		case UserSelection.Yes:
-			if (!lossAdjuster.evaluateCompensation(selectedEvent.getEventID(), true))
-				System.out.println("시스템 오류로 인해 심사를 진행할 수 없습니다");
-			break;
-		case UserSelection.No:
-			if (!lossAdjuster.payCompensation(selectedEvent.getEventID(), false))
-				System.out.println("시스템 오류로 인해 심사를 진행할 수 없습니다");
-			break;
-		case UserSelection.Cancel:
-			System.out.println("심사가 취소되었습니다.");
-			break;
-		}
-
-	}
+//	private void evaluateCompensation() {
+//		LossAdjuster lossAdjuster = (LossAdjuster) loginedEmployee; // 관리자 로딩
+//
+//		EventList eventList = lossAdjuster.getEventList(); // 컴포지션... 관리자가 리스트를 들고 있음, 가져와야함
+//
+//		Event selectedEvent = eventDetailVeiw(eventList);
+//		if (selectedEvent == null) {
+//			System.out.println("메뉴로 돌아갑니다.");
+//			return;
+//		}
+//		Customer selectedCustomer = CustomerDetailView(selectedEvent);
+//		if (selectedCustomer == null) {
+//			System.out.println("메뉴로 돌아갑니다.");
+//			return;
+//		}
+//		// 계약이 아직 구현되지 않아, 계약 조회는 이후 구현
+//		System.out.println("심사 결과를 선택해주세요 pass = Yes, nonpass = No, cancel = Cancel");
+//		switch (getUserSelectYorN()) {
+//		case UserSelection.Yes:
+//			if (!lossAdjuster.evaluateCompensation(selectedEvent.getEventID(), true))
+//				System.out.println("시스템 오류로 인해 심사를 진행할 수 없습니다");
+//			break;
+//		case UserSelection.No:
+//			if (!lossAdjuster.payCompensation(selectedEvent.getEventID(), false))
+//				System.out.println("시스템 오류로 인해 심사를 진행할 수 없습니다");
+//			break;
+//		case UserSelection.Cancel:
+//			System.out.println("심사가 취소되었습니다.");
+//			break;
+//		}
+//
+//	}
 
 //	private Customer CustomerDetailView(Event selectedEvent) {
 //		Customer selectedCustomer = customerList.search(selectedEvent.getCustomerID());
