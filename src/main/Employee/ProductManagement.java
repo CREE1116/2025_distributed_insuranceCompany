@@ -3,7 +3,6 @@ package main.Employee;
 import java.util.*;
 import java.sql.*;
 
-import main.DBConnection;
 import main.Enum.Sex;
 import main.Data.InsuranceProduct;
 import main.List.CustomerList;

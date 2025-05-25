@@ -1,7 +1,5 @@
 package main.Employee;
 
-import main.DBConnection;
-
 public class Employee {
 
 	private String employeeID;
