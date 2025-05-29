@@ -9,6 +9,8 @@ public enum ProcessState {
     public int getValue() {
         return value;
     }
+
+
     public static ProcessState fromString(String state) {
         return switch (state.toLowerCase()) {
             case "awaiting" -> Awaiting;
