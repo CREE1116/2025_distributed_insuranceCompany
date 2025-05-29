@@ -1,4 +1,4 @@
-package main.Data;
+package main.Employee;
 
 import main.Enum.Sex;
 

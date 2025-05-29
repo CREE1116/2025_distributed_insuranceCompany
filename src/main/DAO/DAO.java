@@ -39,7 +39,7 @@ public class DAO {
    * @return SELECT 쿼리인 경우 ResultSet 객체, 그 외의 경우 null
    * @throws SQLException SQL 실행 중 오류 발생 시
    */
-  public ResultSetWrapper executeQuery(String sql, Object... params) throws SQLException {
+  public static ResultSetWrapper executeQuery(String sql, Object... params) throws SQLException {
     // SQL 쿼리 타입을 대략적으로 판단 (SELECT, INSERT, UPDATE, DELETE)
     String trimmedSql = sql.trim().toUpperCase();
     PreparedStatement preparedStatement = null;
@@ -75,7 +75,7 @@ public class DAO {
    * @return
    * @throws SQLException
    */
-  private ResultSetWrapper resultSetWrapping(ResultSet resultSet) throws SQLException {
+  private static ResultSetWrapper resultSetWrapping(ResultSet resultSet) throws SQLException {
     List<Map<String, Object>> resultList = new ArrayList<>();
     if (resultSet == null) {
       return null; // null ResultSet에 대한 처리

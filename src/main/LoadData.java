@@ -1,9 +1,8 @@
 package main;
 
-import main.Data.Customer;
+import main.Employee.Customer;
 import java.util.HashMap;
 
-import main.Data.InsuranceProduct;
 import main.Employee.Employee.EmployeeType;
 import main.Employee.LossAdjuster;
 import main.Employee.ProductManagement;
@@ -13,7 +12,6 @@ import main.List.CustomerListImpl;
 import main.List.EmployeeListImpl;
 import main.List.InsuranceProductList;
 import main.List.InsuranceProductListImpl;
-import java.sql.*;
 
 public class LoadData {
 	private CustomerListImpl customerList;
